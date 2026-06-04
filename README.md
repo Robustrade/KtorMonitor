@@ -38,8 +38,8 @@ dependencyResolutionManagement {
         maven {
             url = uri("https://maven.pkg.github.com/Robustrade/KtorMonitor")
             credentials {
-                username = providers.gradleProperty("gpr.user").orElse(providers.environmentVariable("GITHUB_ACTOR")).orNull
-                password = providers.gradleProperty("gpr.key").orElse(providers.environmentVariable("GITHUB_TOKEN")).orNull
+                username = System.getenv("USERNAME")
+                password = System.getenv("USER_TOKEN")
             }
         }
     }

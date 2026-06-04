@@ -24,18 +24,10 @@ subprojects {
             repositories {
                 maven {
                     name = "GitHubPackages"
-                    url = uri(
-                        providers.gradleProperty("gpr.url")
-                            .orElse(providers.environmentVariable("GITHUB_PACKAGES_URL"))
-                            .getOrElse("https://maven.pkg.github.com/Robustrade/KtorMonitor")
-                    )
+                    url = uri("https://maven.pkg.github.com/Robustrade/KtorMonitor")
                     credentials {
-                        username = providers.gradleProperty("gpr.user")
-                            .orElse(providers.environmentVariable("GITHUB_ACTOR"))
-                            .orNull
-                        password = providers.gradleProperty("gpr.key")
-                            .orElse(providers.environmentVariable("GITHUB_TOKEN"))
-                            .orNull
+                        username = System.getenv("USERNAME")
+                        password = System.getenv("USER_TOKEN")
                     }
                 }
             }
