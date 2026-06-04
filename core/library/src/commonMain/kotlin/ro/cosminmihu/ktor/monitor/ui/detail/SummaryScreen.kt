@@ -36,10 +36,9 @@ import ro.cosminmihu.ktor.monitor.ui.resources.ktor_summary_response_time
 import ro.cosminmihu.ktor.monitor.ui.resources.ktor_summary_status
 import ro.cosminmihu.ktor.monitor.ui.resources.ktor_summary_total_size
 import ro.cosminmihu.ktor.monitor.ui.resources.ktor_summary_url
-import androidx.compose.ui.tooling.preview.Preview
-import androidx.compose.ui.tooling.preview.PreviewParameter
-import androidx.compose.ui.tooling.preview.datasource.LoremIpsum
-import ro.cosminmihu.ktor.monitor.ui.preview.UI_MODE_NIGHT_YES
+import org.jetbrains.compose.ui.tooling.preview.Preview
+import org.jetbrains.compose.ui.tooling.preview.PreviewParameter
+import ro.cosminmihu.ktor.monitor.ui.preview.LoremIpsum
 import ro.cosminmihu.ktor.monitor.ui.theme.LibraryTheme
 
 @Composable
@@ -210,8 +209,7 @@ private fun String.toSlug(): String = take(24)
     .trim('-')
     .ifEmpty { "users" }
 
-@Preview(name = "Light")
-@Preview(name = "Dark", uiMode = UI_MODE_NIGHT_YES)
+@Preview
 @Composable
 private fun SummaryScreenPreview(
     @PreviewParameter(LoremIpsum::class) lorem: String,
@@ -221,8 +219,7 @@ private fun SummaryScreenPreview(
     }
 }
 
-@Preview(name = "Light")
-@Preview(name = "Dark", uiMode = UI_MODE_NIGHT_YES)
+@Preview
 @Composable
 private fun SummaryScreenLoadingPreview(
     @PreviewParameter(LoremIpsum::class) lorem: String,
@@ -232,8 +229,7 @@ private fun SummaryScreenLoadingPreview(
     }
 }
 
-@Preview(name = "Light")
-@Preview(name = "Dark", uiMode = UI_MODE_NIGHT_YES)
+@Preview
 @Composable
 private fun SummaryScreenErrorPreview(
     @PreviewParameter(LoremIpsum::class) lorem: String,
@@ -243,8 +239,7 @@ private fun SummaryScreenErrorPreview(
     }
 }
 
-@Preview(name = "Light")
-@Preview(name = "Dark", uiMode = UI_MODE_NIGHT_YES)
+@Preview
 @Composable
 private fun SummaryScreenHttpErrorPreview(
     @PreviewParameter(LoremIpsum::class) lorem: String,

@@ -45,7 +45,7 @@ import androidx.compose.ui.focus.focusRequester
 import androidx.compose.ui.platform.LocalUriHandler
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextOverflow
-import androidx.compose.ui.tooling.preview.Preview
+import org.jetbrains.compose.ui.tooling.preview.Preview
 import org.jetbrains.compose.resources.stringResource
 import org.jetbrains.compose.resources.vectorResource
 import ro.cosminmihu.ktor.monitor.core.URL
@@ -88,14 +88,6 @@ internal fun ListScreen(
     val uriHandler = LocalUriHandler.current
     var showSearchBar by rememberSaveable { mutableStateOf(false) }
     val searchFocusRequester = remember { FocusRequester() }
-
-    LaunchedEffect(showSearchBar) {
-        if (showSearchBar) {
-            searchFocusRequester.requestFocus()
-        } else {
-            searchFocusRequester.freeFocus()
-        }
-    }
 
     Scaffold(
         modifier = modifier,
@@ -194,6 +186,16 @@ internal fun ListScreen(
                 )
 
                 AnimatedVisibility(visible = showSearchBar) {
+                    LaunchedEffect(Unit) {
+                        // Yield coroutine execution to allow a layout pass to attach the FocusRequester
+                        kotlinx.coroutines.yield()
+                        try {
+                            searchFocusRequester.requestFocus()
+                        } catch (_: IllegalStateException) {
+                            // Defensive block to catch edge-case layout delays
+                        }
+                    }
+
                     Surface {
                         Column {
                             SearchField(

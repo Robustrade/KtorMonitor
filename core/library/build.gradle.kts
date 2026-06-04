@@ -1,4 +1,3 @@
-import org.jetbrains.kotlin.gradle.ExperimentalWasmDsl
 import org.jetbrains.kotlin.gradle.dsl.JvmTarget
 
 plugins {
@@ -9,7 +8,6 @@ plugins {
     alias(libs.plugins.kotlinxSerialization)
     alias(libs.plugins.sqldelight)
     alias(libs.plugins.kotlinx.atomicfu)
-    alias(libs.plugins.koin.compiler)
     alias(libs.plugins.maven.publish)
     alias(libs.plugins.binary.compatibility.validator)
     alias(libs.plugins.dokka)
@@ -72,10 +70,6 @@ apiValidation {
 }
 
 mavenPublishing {
-    publishToMavenCentral()
-
-    signAllPublications()
-
     val artifact = "ktor-monitor-core"
     coordinates(group.toString(), artifact, version.toString())
 
@@ -130,15 +124,6 @@ kotlin {
         freeCompilerArgs.add("-Xexpect-actual-classes") // TODO remove after jetbrains fix
     }
 
-    js {
-        browser()
-    }
-
-    @OptIn(ExperimentalWasmDsl::class)
-    wasmJs {
-        browser()
-    }
-
     androidTarget {
         compilerOptions {
             jvmTarget.set(JvmTarget.JVM_11)
@@ -154,8 +139,6 @@ kotlin {
             linkerOpts("-lsqlite3")
         }
     }
-
-    jvm()
 
     sourceSets {
         androidMain.dependencies {
@@ -180,7 +163,6 @@ kotlin {
             implementation(libs.compose.adaptive)
             implementation(libs.compose.adaptive.layout)
             implementation(libs.compose.adaptive.navigation)
-            implementation(libs.navigation.event)
             implementation(libs.androidx.lifecycle.viewmodel)
             implementation(libs.androidx.lifecycle.runtime.compose)
             implementation(libs.sqldelight.runtime)
@@ -197,19 +179,6 @@ kotlin {
             implementation(libs.kotlinx.atomicfu)
             implementation(libs.ksoup)
             implementation(libs.ktor.utils)
-        }
-        jvmMain.dependencies {
-            implementation(compose.desktop.currentOs)
-            implementation(libs.kotlinx.coroutines.swing)
-            implementation(libs.sqldelight.jvm)
-            implementation(libs.slf4j.simple)
-        }
-
-        webMain.dependencies {
-            implementation(libs.sqldelight.web)
-            implementation(npm("sql.js", libs.versions.sqljs.get()))
-            implementation(npm("@cashapp/sqldelight-sqljs-worker", libs.versions.sqldelight.get()))
-            implementation(devNpm("copy-webpack-plugin", libs.versions.webpack.get()))
         }
     }
 

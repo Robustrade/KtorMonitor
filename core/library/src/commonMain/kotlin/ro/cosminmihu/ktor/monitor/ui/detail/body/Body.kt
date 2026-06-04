@@ -13,9 +13,9 @@ import androidx.compose.foundation.rememberScrollState
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.tooling.preview.Preview
-import androidx.compose.ui.tooling.preview.PreviewParameter
-import androidx.compose.ui.tooling.preview.datasource.LoremIpsum
+import org.jetbrains.compose.ui.tooling.preview.Preview
+import org.jetbrains.compose.ui.tooling.preview.PreviewParameter
+import ro.cosminmihu.ktor.monitor.ui.preview.LoremIpsum
 import coil3.ImageLoader
 import coil3.compose.AsyncImage
 import coil3.compose.LocalPlatformContext
@@ -40,7 +40,6 @@ import ro.cosminmihu.ktor.monitor.ui.detail.hasCopyableContent
 import ro.cosminmihu.ktor.monitor.ui.detail.hasPreview
 import ro.cosminmihu.ktor.monitor.ui.detail.noBody
 import ro.cosminmihu.ktor.monitor.ui.detail.transaction.TransactionSection
-import ro.cosminmihu.ktor.monitor.ui.preview.UI_MODE_NIGHT_YES
 import ro.cosminmihu.ktor.monitor.ui.resources.Res
 import ro.cosminmihu.ktor.monitor.ui.resources.ktor_body
 import ro.cosminmihu.ktor.monitor.ui.theme.LibraryTheme
@@ -175,8 +174,7 @@ internal fun Body(
     }
 }
 
-@Preview(name = "Light")
-@Preview(name = "Dark", uiMode = UI_MODE_NIGHT_YES)
+@Preview
 @Composable
 private fun BodyPreview(
     @PreviewParameter(LoremIpsum::class) lorem: String,
@@ -197,8 +195,7 @@ private fun BodyPreview(
     }
 }
 
-@Preview(name = "Light")
-@Preview(name = "Dark", uiMode = UI_MODE_NIGHT_YES)
+@Preview
 @Composable
 private fun BodyJsonPreview(
     @PreviewParameter(LoremIpsum::class) lorem: String,
@@ -220,8 +217,7 @@ private fun BodyJsonPreview(
     }
 }
 
-@Preview(name = "Light")
-@Preview(name = "Dark", uiMode = UI_MODE_NIGHT_YES)
+@Preview
 @Composable
 private fun BodyEmptyPreview() {
     LibraryTheme {

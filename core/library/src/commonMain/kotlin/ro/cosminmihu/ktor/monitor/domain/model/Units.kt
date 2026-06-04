@@ -1,5 +1,6 @@
 package ro.cosminmihu.ktor.monitor.domain.model
 
+import kotlinx.datetime.Instant
 import kotlinx.datetime.LocalDateTime
 import kotlinx.datetime.TimeZone
 import kotlinx.datetime.format
@@ -12,10 +13,7 @@ import kotlinx.datetime.toLocalDateTime
 import kotlin.math.log
 import kotlin.math.pow
 import kotlin.math.round
-import kotlin.time.ExperimentalTime
-import kotlin.time.Instant
 
-@OptIn(ExperimentalTime::class)
 internal fun Long.formatTime() = Instant.fromEpochMilliseconds(this)
     .toLocalDateTime(TimeZone.currentSystemDefault())
     .format(
@@ -25,14 +23,13 @@ internal fun Long.formatTime() = Instant.fromEpochMilliseconds(this)
         }
     )
 
-@OptIn(ExperimentalTime::class)
 internal fun Long.formatDateTimeTime() = Instant.fromEpochMilliseconds(this)
     .format(
         DateTimeComponents.Format {
             dayOfWeek(DayOfWeekNames.ENGLISH_ABBREVIATED)
             char(',')
             char(' ')
-            year(); char(' '); monthName(MonthNames.ENGLISH_ABBREVIATED); char(' '); day()
+            year(); char(' '); monthName(MonthNames.ENGLISH_ABBREVIATED); char(' '); dayOfMonth()
             char(' ')
             hour(); char(':'); minute(); char(':'); second()
             optional { char('.'); secondFraction() }

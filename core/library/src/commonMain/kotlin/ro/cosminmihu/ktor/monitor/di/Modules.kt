@@ -3,11 +3,10 @@ package ro.cosminmihu.ktor.monitor.di
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.SupervisorJob
+import org.koin.core.module.dsl.factoryOf
+import org.koin.core.module.dsl.singleOf
+import org.koin.core.module.dsl.viewModelOf
 import org.koin.dsl.module
-import org.koin.plugin.module.dsl.create
-import org.koin.plugin.module.dsl.factory
-import org.koin.plugin.module.dsl.single
-import org.koin.plugin.module.dsl.viewModel
 import ro.cosminmihu.ktor.monitor.core.ClipboardManager
 import ro.cosminmihu.ktor.monitor.core.ShareManager
 import ro.cosminmihu.ktor.monitor.db.LibraryDao
@@ -37,9 +36,13 @@ internal fun libraryModule() = listOf(
 )
 
 internal val databaseModule = module {
-    factory { create(::createDatabaseDriver) }
-    single { create(::createDatabase) }
-    factory<LibraryDao>()
+    factory {
+        createDatabaseDriver()
+    }
+    single {
+        createDatabase(get())
+    }
+    factoryOf(::LibraryDao)
 }
 
 internal val coroutineModule = module {
@@ -49,30 +52,30 @@ internal val coroutineModule = module {
 }
 
 internal val notificationModule = module {
-    factory<NotificationManager>()
+    factoryOf(::NotificationManager)
 }
 
 internal val viewModelModule = module {
-    viewModel<MainViewModel>()
-    viewModel<ListViewModel>()
-    viewModel<DetailViewModel>()
+    viewModelOf(::MainViewModel)
+    viewModelOf(::ListViewModel)
+    viewModelOf(::DetailViewModel)
 }
 
 internal val domainModule = module {
-    single<ConfigUseCase>()
+    singleOf(::ConfigUseCase)
 
-    single<ListenByRecentCallsUseCase>()
-    factory<RetentionUseCase>()
+    singleOf(::ListenByRecentCallsUseCase)
+    factoryOf(::RetentionUseCase)
 
-    factory<GetCallsUseCase>()
-    factory<GetCallUseCase>()
-    factory<DeleteCallsUseCase>()
+    factoryOf(::GetCallsUseCase)
+    factoryOf(::GetCallUseCase)
+    factoryOf(::DeleteCallsUseCase)
 
-    factory<ClipboardManager>()
-    factory<ShareManager>()
+    factoryOf(::ClipboardManager)
+    factoryOf(::ShareManager)
 
-    factory<ExportCallUrlUseCase>()
-    factory<ExportCallRequestAsCurlUseCase>()
-    factory<ExportCallRequestAsWgetUseCase>()
-    factory<ExportCallAsTextUseCase>()
+    factoryOf(::ExportCallUrlUseCase)
+    factoryOf(::ExportCallRequestAsCurlUseCase)
+    factoryOf(::ExportCallRequestAsWgetUseCase)
+    factoryOf(::ExportCallAsTextUseCase)
 }

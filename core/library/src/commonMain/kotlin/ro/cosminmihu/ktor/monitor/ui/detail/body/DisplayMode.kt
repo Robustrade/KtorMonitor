@@ -1,23 +1,16 @@
 package ro.cosminmihu.ktor.monitor.ui.detail.body
 
-import androidx.compose.foundation.horizontalScroll
-import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
-import androidx.compose.foundation.layout.FlowRow
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
-import androidx.compose.foundation.rememberScrollState
-import androidx.compose.material3.ButtonGroupDefaults
-import androidx.compose.material3.ExperimentalMaterial3ExpressiveApi
 import androidx.compose.material3.MaterialTheme
+import androidx.compose.material3.SegmentedButton
+import androidx.compose.material3.SegmentedButtonDefaults
+import androidx.compose.material3.SingleChoiceSegmentedButtonRow
 import androidx.compose.material3.Text
-import androidx.compose.material3.ToggleButton
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.semantics.Role
-import androidx.compose.ui.semantics.role
-import androidx.compose.ui.semantics.semantics
 import androidx.compose.ui.text.font.FontStyle
 import androidx.compose.ui.text.font.FontWeight
 import org.jetbrains.compose.resources.stringResource
@@ -29,15 +22,13 @@ import ro.cosminmihu.ktor.monitor.ui.resources.ktor_response_view_binary
 import ro.cosminmihu.ktor.monitor.ui.resources.ktor_response_view_code
 import ro.cosminmihu.ktor.monitor.ui.resources.ktor_response_view_preview
 import ro.cosminmihu.ktor.monitor.ui.resources.ktor_response_view_raw
-import androidx.compose.ui.tooling.preview.Preview
-import androidx.compose.ui.tooling.preview.PreviewParameter
-import androidx.compose.ui.tooling.preview.datasource.LoremIpsum
+import org.jetbrains.compose.ui.tooling.preview.Preview
+import org.jetbrains.compose.ui.tooling.preview.PreviewParameter
+import ro.cosminmihu.ktor.monitor.ui.preview.LoremIpsum
 import ro.cosminmihu.ktor.monitor.ui.detail.DisplayMode
 import ro.cosminmihu.ktor.monitor.ui.detail.hasPreview
-import ro.cosminmihu.ktor.monitor.ui.preview.UI_MODE_NIGHT_YES
 import ro.cosminmihu.ktor.monitor.ui.theme.LibraryTheme
 
-@OptIn(ExperimentalMaterial3ExpressiveApi::class)
 @Composable
 internal fun DisplayModeSelector(
     body: DetailUiState.Body,
@@ -101,23 +92,19 @@ internal fun DisplayModeSelector(
             )
         }
 
-        FlowRow(
+        SingleChoiceSegmentedButtonRow(
             modifier = Modifier
-                .horizontalScroll(rememberScrollState())
                 .align(Alignment.CenterEnd)
                 .padding(horizontal = Dimens.Small),
-            horizontalArrangement = Arrangement.spacedBy(ButtonGroupDefaults.ConnectedSpaceBetween),
         ) {
             segmentedButtons.forEachIndexed { index, item ->
-                ToggleButton(
-                    checked = item.selected,
-                    onCheckedChange = { if (it) item.onClick() },
-                    shapes = when (index) {
-                        0 -> ButtonGroupDefaults.connectedLeadingButtonShapes()
-                        segmentedButtons.lastIndex -> ButtonGroupDefaults.connectedTrailingButtonShapes()
-                        else -> ButtonGroupDefaults.connectedMiddleButtonShapes()
-                    },
-                    modifier = Modifier.semantics { role = Role.RadioButton },
+                SegmentedButton(
+                    selected = item.selected,
+                    onClick = item.onClick,
+                    shape = SegmentedButtonDefaults.itemShape(
+                        index = index,
+                        count = segmentedButtons.size,
+                    ),
                 ) {
                     Text(text = item.text, fontWeight = FontWeight.Bold)
                 }
@@ -133,8 +120,7 @@ private data class BodyShowTypeSegment(
 )
 
 
-@Preview(name = "Light")
-@Preview(name = "Dark", uiMode = UI_MODE_NIGHT_YES)
+@Preview
 @Composable
 private fun DisplayModeSelectorPreview(
     @PreviewParameter(LoremIpsum::class) lorem: String,
@@ -156,8 +142,7 @@ private fun DisplayModeSelectorPreview(
     }
 }
 
-@Preview(name = "Light")
-@Preview(name = "Dark", uiMode = UI_MODE_NIGHT_YES)
+@Preview
 @Composable
 private fun DisplayModeSelectorTrimmedPreview(
     @PreviewParameter(LoremIpsum::class) lorem: String,

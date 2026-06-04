@@ -13,10 +13,9 @@ import org.jetbrains.compose.resources.stringResource
 import ro.cosminmihu.ktor.monitor.ui.detail.transaction.TransactionSection
 import ro.cosminmihu.ktor.monitor.ui.resources.Res
 import ro.cosminmihu.ktor.monitor.ui.resources.ktor_headers
-import androidx.compose.ui.tooling.preview.Preview
-import androidx.compose.ui.tooling.preview.PreviewParameter
-import androidx.compose.ui.tooling.preview.datasource.LoremIpsum
-import ro.cosminmihu.ktor.monitor.ui.preview.UI_MODE_NIGHT_YES
+import org.jetbrains.compose.ui.tooling.preview.Preview
+import org.jetbrains.compose.ui.tooling.preview.PreviewParameter
+import ro.cosminmihu.ktor.monitor.ui.preview.LoremIpsum
 import ro.cosminmihu.ktor.monitor.ui.theme.LibraryTheme
 
 @Composable
@@ -58,8 +57,7 @@ internal fun Headers(headers: Map<String, List<String>>) {
     }
 }
 
-@Preview(name = "Light")
-@Preview(name = "Dark", uiMode = UI_MODE_NIGHT_YES)
+@Preview
 @Composable
 private fun HeadersPreview(
     @PreviewParameter(LoremIpsum::class) lorem: String,
@@ -77,8 +75,7 @@ private fun HeadersPreview(
     }
 }
 
-@Preview(name = "Light")
-@Preview(name = "Dark", uiMode = UI_MODE_NIGHT_YES)
+@Preview
 @Composable
 private fun HeadersEmptyPreview() {
     LibraryTheme {

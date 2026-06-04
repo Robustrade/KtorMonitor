@@ -1,11 +1,11 @@
 // Klib ABI Dump
-// Targets: [iosArm64, iosSimulatorArm64, js, wasmJs]
+// Targets: [iosArm64, iosSimulatorArm64]
 // Rendering settings:
 // - Signature version: 2
 // - Show manifest properties: true
 // - Show declarations: true
 
-// Library unique name: <ro.cosminmihu.ktor:library-no-op>
+// Library unique name: <robustrade:library-no-op>
 final object ro.cosminmihu.ktor.monitor/ContentLength { // ro.cosminmihu.ktor.monitor/ContentLength|null[0]
     final const val Default // ro.cosminmihu.ktor.monitor/ContentLength.Default|{}Default[0]
         final fun <get-Default>(): kotlin/Int // ro.cosminmihu.ktor.monitor/ContentLength.Default.<get-Default>|<get-Default>(){}[0]

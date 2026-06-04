@@ -1,11 +1,11 @@
 // Klib ABI Dump
-// Targets: [iosArm64, iosSimulatorArm64, js, wasmJs]
+// Targets: [iosArm64, iosSimulatorArm64]
 // Rendering settings:
 // - Signature version: 2
 // - Show manifest properties: true
 // - Show declarations: true
 
-// Library unique name: <ro.cosminmihu.ktor:library-ktor>
+// Library unique name: <robustrade:library-ktor>
 final class ro.cosminmihu.ktor.monitor/KtorMonitorLoggingConfig { // ro.cosminmihu.ktor.monitor/KtorMonitorLoggingConfig|null[0]
     constructor <init>() // ro.cosminmihu.ktor.monitor/KtorMonitorLoggingConfig.<init>|<init>(){}[0]
 

@@ -1,6 +1,6 @@
-[![Maven Central](https://img.shields.io/maven-central/v/ro.cosminmihu.ktor/ktor-monitor-logging?logo=apachemaven&label=Maven%20Central&link=https://search.maven.org/artifact/ro.cosminmihu.ktor/ktor-monitor-logging/)](https://search.maven.org/artifact/ro.cosminmihu.ktor/ktor-monitor-logging)
+[![GitHub Packages](https://img.shields.io/badge/GitHub%20Packages-robustrade%3Aktor--monitor-2088FF?logo=github&logoColor=white)](https://github.com/Robustrade/KtorMonitor/packages)
 [![License](https://img.shields.io/badge/license-Apache%20License%202.0-blue.svg?label=Licence&logo=lintcode&logoColor=white&color=#3DA639)](https://github.com/CosminMihuMDC/KtorMonitor/blob/main/LICENSE)
-[![Platforms](https://img.shields.io/badge/Platforms-Android%20+%20iOS%20+%20JVM%20+%20Wasm%20+%20Js-brightgreen?logo=kotlin&logoColor=white&color=8d69e0)](https://cosminmihumdc.github.io/KtorMonitor)
+[![Platforms](https://img.shields.io/badge/Platforms-Android%20+%20iOS-brightgreen?logo=kotlin&logoColor=white&color=8d69e0)](https://cosminmihumdc.github.io/KtorMonitor)
 [![Slack](https://img.shields.io/badge/Slack-kotlinlang-4A164B?logo=sololearn&logoColor=white)](https://kotlinlang.slack.com/archives/C0AB9GA32H0)
 [![JetBrains Klibs.io](https://img.shields.io/badge/JetBrains-klibs.io-4284F3?logo=jetbrains&logoColor=white)](https://klibs.io/project/CosminMihuMDC/KtorMonitor)
 [![Documentation](https://img.shields.io/badge/Docs-gray?logo=readthedocs&logoColor=white)](https://cosminmihumdc.github.io/KtorMonitor)
@@ -26,6 +26,26 @@ Powerful tool to monitor [Ktor Client](https://ktor.io/), [OkHttp](https://squar
 *   📡**SSE & WebSockets**: Track one-way streams (*SSE*) and bidirectional traffic (*WebSockets*).
 *   🛡️**Production Safe**: No-Op version to ensure monitoring code is excluded from your production builds.
 
+## 📦 Repository (GitHub Packages)
+
+This fork is published to **GitHub Packages** under the `robustrade` group (not Maven Central).
+Add the GitHub Packages repository — authenticated with a GitHub token that has `read:packages` —
+to your `settings.gradle.kts`:
+
+```kotlin
+dependencyResolutionManagement {
+    repositories {
+        maven {
+            url = uri("https://maven.pkg.github.com/Robustrade/KtorMonitor")
+            credentials {
+                username = System.getenv("USERNAME")
+                password = System.getenv("USER_TOKEN")
+            }
+        }
+    }
+}
+```
+
 ## 📦 Setup (Kotlin Multiplatform) for [Ktor Client](https://ktor.io/)
 
 ### <img src="https://upload.wikimedia.org/wikipedia/commons/6/6b/Gradle_logo.svg" width="100"/>
@@ -34,7 +54,7 @@ Powerful tool to monitor [Ktor Client](https://ktor.io/), [OkHttp](https://squar
 kotlin {
     sourceSets {
         commonMain.dependencies {
-            implementation("ro.cosminmihu.ktor:ktor-monitor-logging:1.13.0")
+            implementation("robustrade:ktor-monitor-logging:1.13.0")
         }
     }
 }
@@ -48,7 +68,7 @@ To isolate KtorMonitor from release builds, use the `ktor-monitor-logging-no-op`
 kotlin {
     sourceSets {
         commonMain.dependencies {
-            implementation("ro.cosminmihu.ktor:ktor-monitor-logging-no-op:1.13.0")
+            implementation("robustrade:ktor-monitor-logging-no-op:1.13.0")
         }
     }
 }
@@ -60,8 +80,8 @@ kotlin {
 
 ```kotlin
 dependencies {
-    debugImplementation("ro.cosminmihu.ktor:ktor-monitor-logging:1.13.0")
-    releaseImplementation("ro.cosminmihu.ktor:ktor-monitor-logging-no-op:1.13.0")
+    debugImplementation("robustrade:ktor-monitor-logging:1.13.0")
+    releaseImplementation("robustrade:ktor-monitor-logging-no-op:1.13.0")
 }
 ```
 
@@ -88,71 +108,8 @@ HttpClient {
 - ```retentionPeriod``` - The retention period for the logs. Default is **1h**.
 - ```maxContentLength``` - The maximum length of the content that will be logged. After this, body will be truncated. Default is **250_000**. To log the entire body use ```ContentLength.Full```.
 
-## 📦 Setup (Android & JVM) for [OkHttp](https://square.github.io/okhttp/)
-
-### <img src="https://upload.wikimedia.org/wikipedia/commons/6/6b/Gradle_logo.svg" width="100"/>
-
-```kotlin
-dependencies {
-    debugImplementation("`ro.cosminmihu.ktor:ktor-monitor-okhttp-interceptor:1.13.0")
-    releaseImplementation("ro.cosminmihu.ktor:ktor-monitor-okhttp-interceptor-no-op:1.13.0")
-}
-```
-
-For ***Android minSdk < 26***, [Core Library Desugaring](https://developer.android.com/studio/write/java8-support#library-desugaring) is required.
-
-### <img src="https://pw-renderer-production-c.squarecdn.com/6d6a21f1ace5b8a7c93127a6f77087418f6ac596/_svelte/favicon.ico" width="30" style="background:#eee;"/> Install OkHttp Interceptor
-
-```kotlin
-OkHttpClient.Builder()
-    .addNetworkInterceptor(
-        KtorMonitorInterceptor {
-            sanitizeHeader { header -> header == "Authorization" }
-            filter { request -> !request.url.host.contains("cosminmihu.ro") }
-            showNotification = true
-            retentionPeriod = RetentionPeriod.OneHour
-            maxContentLength = ContentLength.Default
-        }
-    )
-    .build()
-```
-
-- ```sanitizeHeader``` - sanitize sensitive headers to avoid their values appearing in the logs
-- ```filter``` - filter logs for calls matching a predicate.
-- ```showNotification``` - Keep track of latest requests and responses into notification. Default is **true**. Android and iOS only. Notifications permission needs to be granted.
-- ```retentionPeriod``` - The retention period for the logs. Default is **1h**.
-- ```maxContentLength``` - The maximum length of the content that will be logged. After this, body will be truncated. Default is **250_000**. To log the entire body use ```ContentLength.Full```.
-
-## 📦 Setup (Android & JVM) for [http4k](https://www.http4k.org/)
-
-### <img src="https://upload.wikimedia.org/wikipedia/commons/6/6b/Gradle_logo.svg" width="100"/>
-
-```kotlin
-dependencies {
-    debugImplementation("ro.cosminmihu.ktor:ktor-monitor-http4k-filter:1.13.0")
-    releaseImplementation("ro.cosminmihu.ktor:ktor-monitor-http4k-filter-no-op:1.13.0")
-}
-```
-
-For ***Android minSdk < 26***, [Core Library Desugaring](https://developer.android.com/studio/write/java8-support#library-desugaring) is required.
-
-### <img src="https://images.opencollective.com/http4k/4b91f7a/logo/256.png" width="30" style="background:#eee;"/> Install http4k Filter
-
-```kotlin
-KtorMonitorFilter {
-    sanitizeHeader { header -> header == "Authorization" }
-    filter { request -> !request.uri.host.contains("cosminmihu.ro") }
-    showNotification = true
-    retentionPeriod = RetentionPeriod.OneHour
-    maxContentLength = ContentLength.Default
-}.then(JavaHttpClient())
-```
-
-- ```sanitizeHeader``` - sanitize sensitive headers to avoid their values appearing in the logs
-- ```filter``` - filter logs for calls matching a predicate.
-- ```showNotification``` - Keep track of latest requests and responses into notification. Default is **true**. Android only. Notifications permission needs to be granted.
-- ```retentionPeriod``` - The retention period for the logs. Default is **1h**.
-- ```maxContentLength``` - The maximum length of the content that will be logged. After this, body will be truncated. Default is **250_000**. To log the entire body use ```ContentLength.Full```.
+> **Note:** This fork targets **Android + iOS only** for consumption by `kulu-kmp`. The upstream
+> OkHttp and http4k integrations are not published here.
 
 ## 🧩 Integration
 
