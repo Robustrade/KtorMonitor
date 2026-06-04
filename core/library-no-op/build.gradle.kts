@@ -1,4 +1,3 @@
-import org.jetbrains.kotlin.gradle.ExperimentalWasmDsl
 import org.jetbrains.kotlin.gradle.dsl.JvmTarget
 
 plugins {
@@ -19,10 +18,6 @@ apiValidation {
 }
 
 mavenPublishing {
-    publishToMavenCentral()
-
-    signAllPublications()
-
     val artifact = "ktor-monitor-core-no-op"
     coordinates(group.toString(), artifact, version.toString())
 
@@ -77,15 +72,6 @@ kotlin {
         freeCompilerArgs.add("-Xexpect-actual-classes") // TODO remove after jetbrains fix
     }
 
-    js {
-        browser()
-    }
-
-    @OptIn(ExperimentalWasmDsl::class)
-    wasmJs {
-        browser()
-    }
-
     androidTarget {
         compilerOptions {
             jvmTarget.set(JvmTarget.JVM_11)
@@ -97,15 +83,9 @@ kotlin {
         iosSimulatorArm64(),
     )
 
-    jvm()
-
     sourceSets {
         commonMain.dependencies {
             implementation(compose.ui)
-        }
-        webMain.dependencies {
-            implementation(npm("sql.js", libs.versions.sqljs.get()))
-            implementation(devNpm("copy-webpack-plugin", libs.versions.webpack.get()))
         }
     }
 }

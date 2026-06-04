@@ -1,12 +1,11 @@
 // Klib ABI Dump
-// Targets: [iosArm64, iosSimulatorArm64, js, wasmJs]
-// Alias: ios => [iosArm64, iosSimulatorArm64]
+// Targets: [iosArm64, iosSimulatorArm64]
 // Rendering settings:
 // - Signature version: 2
 // - Show manifest properties: true
 // - Show declarations: true
 
-// Library unique name: <ro.cosminmihu.ktor:library>
+// Library unique name: <robustrade:library>
 final object ro.cosminmihu.ktor.monitor/ContentLength { // ro.cosminmihu.ktor.monitor/ContentLength|null[0]
     final const val Default // ro.cosminmihu.ktor.monitor/ContentLength.Default|{}Default[0]
         final fun <get-Default>(): kotlin/Int // ro.cosminmihu.ktor.monitor/ContentLength.Default.<get-Default>|<get-Default>(){}[0]
@@ -30,9 +29,7 @@ final val ro.cosminmihu.ktor.monitor/ro_cosminmihu_ktor_monitor_InternalLibraryB
 final val ro.cosminmihu.ktor.monitor/ro_cosminmihu_ktor_monitor_RetentionPeriod$stableprop // ro.cosminmihu.ktor.monitor/ro_cosminmihu_ktor_monitor_RetentionPeriod$stableprop|#static{}ro_cosminmihu_ktor_monitor_RetentionPeriod$stableprop[0]
 
 final fun ro.cosminmihu.ktor.monitor/KtorMonitor(androidx.compose.ui/Modifier?, kotlin/Boolean, androidx.compose.runtime/Composer?, kotlin/Int, kotlin/Int) // ro.cosminmihu.ktor.monitor/KtorMonitor|KtorMonitor(androidx.compose.ui.Modifier?;kotlin.Boolean;androidx.compose.runtime.Composer?;kotlin.Int;kotlin.Int){}[0]
+final fun ro.cosminmihu.ktor.monitor/KtorMonitorViewController(): platform.UIKit/UIViewController // ro.cosminmihu.ktor.monitor/KtorMonitorViewController|KtorMonitorViewController(){}[0]
 final fun ro.cosminmihu.ktor.monitor/ro_cosminmihu_ktor_monitor_ContentLength$stableprop_getter(): kotlin/Int // ro.cosminmihu.ktor.monitor/ro_cosminmihu_ktor_monitor_ContentLength$stableprop_getter|ro_cosminmihu_ktor_monitor_ContentLength$stableprop_getter(){}[0]
 final fun ro.cosminmihu.ktor.monitor/ro_cosminmihu_ktor_monitor_InternalLibraryBridge$stableprop_getter(): kotlin/Int // ro.cosminmihu.ktor.monitor/ro_cosminmihu_ktor_monitor_InternalLibraryBridge$stableprop_getter|ro_cosminmihu_ktor_monitor_InternalLibraryBridge$stableprop_getter(){}[0]
 final fun ro.cosminmihu.ktor.monitor/ro_cosminmihu_ktor_monitor_RetentionPeriod$stableprop_getter(): kotlin/Int // ro.cosminmihu.ktor.monitor/ro_cosminmihu_ktor_monitor_RetentionPeriod$stableprop_getter|ro_cosminmihu_ktor_monitor_RetentionPeriod$stableprop_getter(){}[0]
-
-// Targets: [ios]
-final fun ro.cosminmihu.ktor.monitor/KtorMonitorViewController(): platform.UIKit/UIViewController // ro.cosminmihu.ktor.monitor/KtorMonitorViewController|KtorMonitorViewController(){}[0]
