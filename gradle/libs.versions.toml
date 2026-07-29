@@ -1,39 +1,48 @@
 [versions]
 # Toolchain pinned to match kulu-kmp (the consumer) so the published
 # robustrade:ktor-monitor-* artifacts are consumable by kulu-kmp and the android app.
-# DO NOT bump kotlin / compose-multiplatform above kulu-kmp's versions (Kotlin 2.2.0 / Compose 1.8.2):
+# DO NOT bump kotlin / compose-multiplatform above kulu-kmp's versions (Kotlin 2.4.0 / Compose 1.11.1):
 # a KMP library must be built with Kotlin <= its consumer, or klib metadata can't be read.
+#
+# Shared runtime libraries (koin, ktor, coil, coroutines, serialization, datetime, okhttp) MUST match
+# the versions the android app resolves. Gradle resolves version conflicts upwards, so publishing
+# against an older version does not keep it: the app links this library's bytecode against the
+# newer artifact. Where the older API was inlined into this library - koinInject is inline - the
+# result is a NoSuchMethodError at runtime that no compile step catches.
+#
+# kotlinx-datetime tracks kulu-kmp's 0.8.0-0.6.x-compat, the release that keeps the 0.6.x API
+# (kotlinx.datetime.Instant) that domain/model/Units.kt still uses.
 agp = "8.10.0"
 android-compileSdk = "35"
 android-minSdk = "21"
 android-targetSdk = "35"
-androidx-activityCompose = "1.9.3"
-androidx-core-ktx = "1.15.0"
+androidx-activityCompose = "1.13.0"
+androidx-core-ktx = "1.18.0"
 androidx-espresso-core = "3.6.1"
 androidx-lifecycle = "2.9.0"
 androidx-test-junit = "1.2.1"
 accompanist = "0.37.3"
 compose-adaptive = "1.1.2"
-compose-multiplatform = "1.8.2"
+compose-multiplatform = "1.11.1"
 desugar = "2.1.5"
 junit = "4.13.2"
-kotlin = "2.2.0"
-kotlinx-coroutines = "1.10.2"
+kotlin = "2.4.0"
+kotlinx-coroutines = "1.11.0"
 ksoup = "0.2.5"
-ktor = "3.0.1"
-okhttp = "5.3.2"
+ktor = "3.5.1"
+okhttp = "5.4.0"
 http4k = "6.48.0.0"
 material3AdaptiveNavigationSuite = "1.8.2"
 materialIconsExtended = "1.7.3"
-material3 = "1.8.2"
+material3 = "1.9.0"
 slf4j = "2.0.18"
 sqldelight = "2.2.1"
 sqljs = "1.11.0"
 webpack = "9.1.0"
-koin = "4.0.0"
-kotlinx-datetime = "0.6.0"
-kotlinx-serialization = "1.9.0"
-coil = "3.0.4"
+koin = "4.2.2"
+kotlinx-datetime = "0.8.0-0.6.x-compat"
+kotlinx-serialization = "1.11.0"
+coil = "3.5.0"
 kotlin-atomicfu = "0.29.0"
 maven-publish = "0.34.0"
 navigation-event = "1.1.0"
