@@ -15,7 +15,7 @@ plugins {
 
 allprojects {
     group = "robustrade"
-    version = "1.14.0"
+    version = "1.14.2"
 }
 
 subprojects {
