@@ -13,9 +13,12 @@ import kotlin.coroutines.resume
 
 internal actual class NotificationManager {
 
-    private val notificationCenter = UNUserNotificationCenter.currentNotificationCenter().apply {
-        setDelegate(NotificationDelegate(appNotificationDelegate = delegate()))
-    }
+    // The library deliberately does not touch UNUserNotificationCenter.delegate. That property is
+    // the host app's, it is weak (so anything installed here has to be kept alive), and taking it
+    // over displaces whatever the app or its SDKs installed — which silently breaks push handling,
+    // deep links included. The notification below is still delivered to Notification Center; it is
+    // simply not presented as a banner while the app is in the foreground.
+    private val notificationCenter = UNUserNotificationCenter.currentNotificationCenter()
 
     actual suspend fun clear() {
         notificationCenter.removePendingNotificationRequestsWithIdentifiers(listOf(NOTIFICATION_ID.toString()))
